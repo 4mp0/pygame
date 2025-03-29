@@ -39,11 +39,12 @@ pygame.mixer_music.set_volume(BGM_vol)
 char_width, char_height = 50, 50
 char_x, char_y = char_width / 2, char_height / 2
 char_speed = [5, 5]
+rvrs_img_bool = False
 
 char_walk_frames = [
     pygame.image.load("./bg/char/frame1.png").convert_alpha(),
     pygame.image.load("./bg/char/frame2.png").convert_alpha(),
-    pygame.image.load("./bg/char/frame3.png").convert_alpha()
+    #pygame.image.load("./bg/char/frame3.png").convert_alpha()
 ]; frames_index = 0
 
 menu_BGM = [
@@ -52,6 +53,8 @@ menu_BGM = [
 ]
 pygame.mixer_music.play(len(menu_BGM))
 
+npc1 = pygame.image.load("./bg/npc/frame1.png").convert_alpha()
+npc1Pos = npc1.get_rect()
 while True:
     """
         Log events incase of bugs
@@ -67,29 +70,40 @@ while True:
     """
     Keys  = pygame.key.get_pressed()
     if Keys[pygame.K_w]:
+        rvrs_img_bool = False
         char_y -= char_speed[1]
         frames_index = (frames_index + 1) % len(char_walk_frames)
         if char_y < 0:
             char_y = -char_speed[0]
     elif Keys[pygame.K_s]:
+        rvrs_img_bool = False
         char_y += char_speed[1]
         frames_index = (frames_index + 1) % len(char_walk_frames)
         if char_y > WIDTH:
             char_y -= char_speed[1]
     elif Keys[pygame.K_a]:
+        rvrs_img_bool = False
         char_x -= char_speed[0]
         frames_index = (frames_index + 1) % len(char_walk_frames)
         if char_x < 0:
             char_x = -char_speed[0]
     elif Keys[pygame.K_d]:
+        rvrs_img_bool = True
         char_x += char_speed[0]
         frames_index = (frames_index + 1) % len(char_walk_frames)
         if char_x > WIDTH:
             char_x -= char_speed[0]
     """
+        Reverse Image upon meeting condition
+    """
+    img_copy = char_walk_frames[frames_index].copy()
+    img_rvs = pygame.transform.flip(img_copy, rvrs_img_bool, False)
+    
+    """
         Update content
     """
     Screen.fill(("#255c14"))
-    Screen.blit(char_walk_frames[frames_index], (char_x, char_y))
+    Screen.blit(img_rvs, (char_x, char_y))
+    Screen.blit(npc1, (npc1Pos.x, npc1Pos.y))
     pygame.display.flip()
     frames.tick(FPS)
