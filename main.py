@@ -7,17 +7,16 @@ Important:
     Images
     BGM
 """
-
 # Save Data
-
 player_Data = {
     "username" : "",
     "health" : "100",
     "level" : "1",
     "exp" : "0"
 }
-
 pygame.init()
+pygame.display.set_caption("")
+#pygame.display.set_icon("")
 """
     Setting:
     Graphics
@@ -26,11 +25,13 @@ pygame.init()
 WIDTH = 500
 HEIGHT = 480
 FPS = 60
+BGM_vol = 0.05
 
 frames = pygame.time.Clock()
 Screen = pygame.display.set_mode((HEIGHT, WIDTH))
 get_screen_size = Screen.get_rect()
 
+pygame.mixer_music.set_volume(BGM_vol)
 """
     Set up of character
     character animation
@@ -42,22 +43,24 @@ char_speed = [5, 5]
 char_walk_frames = [
     pygame.image.load("./bg/char/frame1.png").convert_alpha(),
     pygame.image.load("./bg/char/frame2.png").convert_alpha(),
-    #pygame.image.load("./bg/char/frame3.png").convert_alpha()
+    pygame.image.load("./bg/char/frame3.png").convert_alpha()
 ]; frames_index = 0
 
-
-menuBGM = pygame.mixer_music.load("./bgm/audio.mp3")
-pygame.mixer_music.play((999))
+menu_BGM = [
+    pygame.mixer_music.load("./bgm/audio1.mp3"),
+    pygame.mixer_music.queue(("./bgm/audio2.mp3"))
+]
+pygame.mixer_music.play(len(menu_BGM))
 
 while True:
-    print(char_x, char_y)
-
-#Check If user is quitting
+    """
+        Log events incase of bugs
+        Check for quit event
+    """
     for ev in pygame.event.get():
-        #print(ev)
         if ev.type == pygame.QUIT:
             pygame.quit()
-            sys.exit()
+            sys.exit()   
     """
         Controls
         Screen Collision
@@ -85,7 +88,6 @@ while True:
             char_x -= char_speed[0]
     """
         Update content
-        Refresh Rate
     """
     Screen.fill(("#255c14"))
     Screen.blit(char_walk_frames[frames_index], (char_x, char_y))

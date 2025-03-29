@@ -1,10 +1,12 @@
 
 To add:
     NPC
-    OPPONENT
+    Opponent
     Combat
-    Submit key
-    
+    Submit/Interaction key
+    Dialogues
+
 Done:
     Movement
     Screen collision
+    
