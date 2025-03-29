@@ -4,6 +4,7 @@ To add:
     OPPONENT
     Combat
     Submit key
+    
 Done:
     Movement
     Screen collision
