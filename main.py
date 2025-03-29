@@ -15,7 +15,7 @@ player_Data = {
     "exp" : "0"
 }
 pygame.init()
-pygame.display.set_caption("")
+pygame.display.set_caption("Omotale")
 #pygame.display.set_icon("")
 """
     Setting:
