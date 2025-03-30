@@ -5,6 +5,8 @@ To add:
     Combat
     Submit/Interaction key
     Dialogues
+    Menu
+    Combat BGM
 
 Done:
     Movement

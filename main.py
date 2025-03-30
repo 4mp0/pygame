@@ -48,8 +48,9 @@ char_walk_frames = [
 ]; frames_index = 0
 
 menu_BGM = [
-    pygame.mixer_music.load("./bgm/audio1.mp3"),
-    pygame.mixer_music.queue(("./bgm/audio2.mp3"))
+    pygame.mixer_music.load("./bgm/audio3.mp3"),
+    pygame.mixer_music.queue(("./bgm/audio2.mp3")),
+    pygame.mixer_music.queue(("./bgm/audio3.mp3"))
 ]
 pygame.mixer_music.play(len(menu_BGM))
 
@@ -98,7 +99,6 @@ while True:
     """
     img_copy = char_walk_frames[frames_index].copy()
     img_rvs = pygame.transform.flip(img_copy, rvrs_img_bool, False)
-    
     """
         Update content
     """
