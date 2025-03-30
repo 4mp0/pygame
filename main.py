@@ -48,15 +48,17 @@ char_walk_frames = [
 ]; frames_index = 0
 
 menu_BGM = [
-    pygame.mixer_music.load("./bgm/audio3.mp3"),
-    pygame.mixer_music.queue(("./bgm/audio2.mp3")),
-    pygame.mixer_music.queue(("./bgm/audio3.mp3"))
+    #pygame.mixer_music.load("./bgm/audio1.mp3"),
+    #pygame.mixer_music.queue(("./bgm/audio2.mp3")),
+    #pygame.mixer_music.queue(("./bgm/audio3.mp3"))
 ]
-pygame.mixer_music.play(len(menu_BGM))
+#pygame.mixer_music.play(len(menu_BGM))
 
 npc1 = pygame.image.load("./bg/npc/frame1.png").convert_alpha()
 npc1Pos = npc1.get_rect()
+npc1Pos.y = 5
 while True:
+    print(char_x, char_y)
     """
         Log events incase of bugs
         Check for quit event
@@ -75,7 +77,7 @@ while True:
         char_y -= char_speed[1]
         frames_index = (frames_index + 1) % len(char_walk_frames)
         if char_y < 0:
-            char_y = -char_speed[0]
+            char_y = -char_speed[1]
     elif Keys[pygame.K_s]:
         rvrs_img_bool = False
         char_y += char_speed[1]
@@ -98,12 +100,18 @@ while True:
         Reverse Image upon meeting condition
     """
     img_copy = char_walk_frames[frames_index].copy()
+    char_pos = img_copy.get_rect()
+    char_pos.x = char_x
+    char_pos.y = char_y
     img_rvs = pygame.transform.flip(img_copy, rvrs_img_bool, False)
+    
+    if char_pos.colliderect(npc1Pos):
+        print("Collision has occurred!")
     """
         Update content
     """
     Screen.fill(("#255c14"))
-    Screen.blit(img_rvs, (char_x, char_y))
     Screen.blit(npc1, (npc1Pos.x, npc1Pos.y))
+    Screen.blit(img_rvs, (char_x, char_y))
     pygame.display.flip()
     frames.tick(FPS)
